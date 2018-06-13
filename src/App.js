@@ -7,6 +7,7 @@ class App extends Component {
     super(props);
   }
   render() {
+    console.log(this);
     return (
       <Router>
         <div>
@@ -20,6 +21,7 @@ class App extends Component {
           <Route exact path='/' render={() => <h2>Home</h2>}/>
           <Route path='/about' render={() => <h2>About</h2>}/>
           <Route path='/topic' component={this.Topics} />
+          <Route path={'/paramId/:id(1|2)'} render={({match}) => {console.log(match); return <div>{match.params.id}</div>}}/>
         </div>
       </Router>
     );
@@ -33,14 +35,15 @@ class App extends Component {
             <li><Link to={`${match.url}/rendring`}>rendring</Link></li>
             <li><Link to={`${match.url}/component`}>component</Link></li>
             <li><Link to={`${match.url}/props`}>props</Link></li>
+            <li><Link to={`${match.url}/param/1`}>params</Link></li>
           </ul>
           <Route path={`${match.url}/:topicId`} component={this.Topic}/>
           <Route exact path={`${match.url}`} render={()=> <div>please Select a topic</div>}/>
         </div>
     )
   }
-  Topic = ({ match }) => {
-    console.log(match);
+  Topic = ({ match,history }) => {
+    console.log(match, JSON.stringify(history));
     return(
         <div>{match.params.topicId}</div>
     )
