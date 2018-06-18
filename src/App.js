@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 
+console.log(React.Children);
 class App extends Component {
   constructor(props){
     super(props);
@@ -17,12 +18,16 @@ class App extends Component {
             <li><Link to='/topic'>topic</Link></li>
           </ul>
           <hr/>
+          <Switch>
+            <Route exact path='/' render={() => <h2>Home</h2>}/>
+            <Route path='/about' render={() => <h2>About</h2>}/>
+            <Route path='/topic' component={this.Topics} />
+            <Route path={'/paramId/:id(1|2)'} render={({match}) => {console.log(match); return <div>{match.params.id}</div>}}/>
+            <Route path='/about' render={() => <h2>About</h2>}/>
+          </Switch>
 
-          <Route exact path='/' render={() => <h2>Home</h2>}/>
-          <Route path='/about' render={() => <h2>About</h2>}/>
-          <Route path='/topic' component={this.Topics} />
-          <Route path={'/paramId/:id(1|2)'} render={({match}) => {console.log(match); return <div>{match.params.id}</div>}}/>
         </div>
+
       </Router>
     );
   }
